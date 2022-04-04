@@ -12,6 +12,7 @@ QUERY_URL_FORMAT = 'https://google.com/search?q="{}"'
 
 PLUGIN_NAME = ACTION_NAME = 'Search from IDA'
 ACTION_LABEL_FORMAT = 'Search for "{}"'
+ACTION_HOTKEY = 'Ctrl-Shift-Q'
 ICONS_DIRECTORY_NAME = 'icons'
 ICON_FILE_EXTENSION = '.png'
 SUPPORTED_BUILTIN_WINDOWS = (ida_kernwin.BWN_DISASM, ida_kernwin.BWN_PSEUDOCODE)
@@ -85,7 +86,8 @@ class SearchFromIda(ida_idaapi.plugin_t):
     def init(self):
         action_desc = ida_kernwin.action_desc_t(ACTION_NAME,
                                                 ACTION_NAME,
-                                                SearchHandler())
+                                                SearchHandler(),
+                                                ACTION_HOTKEY)
 
         ida_kernwin.register_action(action_desc)
         self._update_action_icon()
