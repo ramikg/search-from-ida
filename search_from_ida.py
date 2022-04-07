@@ -1,9 +1,10 @@
 import os
 import webbrowser
-try:
-    from urllib.parse import urlparse  # Python 3
-except ImportError:
-    from urlparse import urlparse  # Python 2
+try:  # Python 3
+    from urllib.parse import urlparse, quote
+except ImportError:  # Python 2
+    from urlparse import urlparse
+    from urllib import quote
 
 import ida_idaapi
 import ida_kernwin
@@ -36,7 +37,8 @@ def _should_enable_action(widget):
 
 class SearchHandler(ida_kernwin.action_handler_t):
     def activate(self, ctx):
-        webbrowser.open_new_tab(QUERY_URL_FORMAT.format(_get_highlight(ctx.widget)))
+        quoted_highlight = quote(_get_highlight(ctx.widget))
+        webbrowser.open_new_tab(QUERY_URL_FORMAT.format(quoted_highlight))
 
     def update(self, ctx):
         if _should_enable_action(ctx.widget):
